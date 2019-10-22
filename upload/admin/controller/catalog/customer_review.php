@@ -3,7 +3,7 @@ class ControllerCatalogTestimonials extends Controller {
 	private $error = array();
   
 	public function index() {
-		$this->load->language('catalog/customer_review');
+		$this->load->language('catalog/customerreview');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
