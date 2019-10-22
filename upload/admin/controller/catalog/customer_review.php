@@ -189,6 +189,45 @@ class ControllerCatalogTestimonials extends Controller {
 		$this->getForm();
 	}
 
+	public function add() {
+	
+		$this->load->language('catalog/customerreview');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+	
+		$this->load->model('catalog/customerreview');
+			//echo'<pre>';print_r($this->request->post); die;
+
+		if (($this->request->server['REQUEST_METHOD'] == 'POST')&& $this->validateForm()) {
+		
+	
+			$this->model_catalog_customerreview->addcustomerreview($this->request->post);
+//die('c');
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+			$this->response->redirect($this->url->link('catalog/customerreview', 'user_token=' . $this->session->data['user_token'] . $url, true));
+		}
+        
+		$this->getForm();
+	}
+
+
+	
+
 
 
 
