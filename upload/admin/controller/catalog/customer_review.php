@@ -419,6 +419,33 @@ class ControllerCatalogCustomer_review extends Controller {
 		$this->response->setOutput($this->load->view('catalog/customerreview_form', $data));
 
 	}
+	   protected function validateForm() {
+    // echo '<pre>';print_r($this->request->post);die;
+		if (!$this->user->hasPermission('modify', 'catalog/customerreview')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		foreach ($this->request->post['customerreview'] as $language_id => $value) {
+			if ((utf8_strlen($value['title']) < 1) || (utf8_strlen($value['title']) > 64)) {
+				$this->error['title'][$language_id] = $this->language->get('error_title');
+			}
+
+			if (utf8_strlen($value['description']) < 3) {
+				$this->error['description'][$language_id] = $this->language->get('error_description');
+			}
+
+			
+		}
+
+		if ($this->error && !isset($this->error['warning'])) {
+			$this->error['warning'] = $this->language->get('error_warning');
+		}
+
+		return !$this->error;
+	}
+
+
+
 
 
 
