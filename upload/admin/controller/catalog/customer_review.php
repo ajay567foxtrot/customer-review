@@ -372,24 +372,24 @@ class ControllerCatalogCustomer_review extends Controller {
 
 		if (isset($this->request->post['status'])) {
 			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($testimonial_description_data)) {
-			$data['status'] = $testimonial_description_data['status'];
+		} elseif (!empty($customerreview_description_data)) {
+			$data['status'] = $customerreview_description_data['status'];
 		} else {
 			$data['status'] = true;
 		}
 
 		if (isset($this->request->post['designation'])) {
 			$data['designation'] = $this->request->post['designation'];
-		} elseif (!empty($testimonial_description_data)) {
-			$data['designation'] = $testimonial_description_data['designation'];
+		} elseif (!empty($customerreview_description_data)) {
+			$data['designation'] = $customerreview_description_data['designation'];
 		} else {
 			$data['designation'] = true;
 		}
 
 		if (isset($this->request->post['sort_order'])) {
 			$data['sort_order'] = $this->request->post['sort_order'];
-		} elseif (!empty($testimonial_description_data)) {
-			$data['sort_order'] = $testimonial_description_data['sort_order'];
+		} elseif (!empty($customerreview_description_data)) {
+			$data['sort_order'] = $customerreview_description_data['sort_order'];
 		} else {
 			$data['sort_order'] = '';
 		}
