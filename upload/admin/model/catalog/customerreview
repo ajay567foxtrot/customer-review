@@ -28,4 +28,61 @@ class ModelCatalogCustomerreview extends Model {
 		return $query->row['total'];
   }
 
- 
+  public function getCustomerreviews($data = array()) {
+
+		if ($data) {
+			$sql ="SELECT * FROM " . DB_PREFIX . "customerreview t LEFT JOIN " . DB_PREFIX . "customerreview_description td ON (t.customerreview_id = td.customerreview_id) WHERE t.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+
+			$sort_data = array(
+				't.author',
+				'td.sort_order'
+			);
+
+			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+				$sql .= " ORDER BY " . $data['sort'];
+			} else {
+				$sql .= " ORDER BY t.author";
+			}
+
+			if (isset($data['order']) && ($data['order'] == 'DESC')) {
+				$sql .= " DESC";
+			} else {
+				$sql .= " ASC";
+			}
+
+			if (isset($data['start']) || isset($data['limit'])) {
+				if ($data['start'] < 0) {
+					$data['start'] = 0;
+				}
+
+				if ($data['limit'] < 1) {
+					$data['limit'] = 20;
+				}
+
+				$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+			}
+
+			$query = $this->db->query($sql);
+
+			return $query->rows;
+
+		} else {
+			$customerreview_data = $this->cache->get('customerreview.' . (int)$this->config->get('config_language_id'));
+
+			if (!$customerreview_data) {
+
+				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customerreview  WHERE id.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY title");
+
+				$customerreview_data = $query->rows;
+
+				$this->cache->set('customerreview.' . (int)$this->config->get('config_language_id'), $customerreview_data);
+			}
+
+			return $customerreview_data;
+		}
+	}
+
+     
+
+	
+}
