@@ -477,6 +477,34 @@ class ControllerCatalogCustomer_review extends Controller {
 
 		$this->getList();
 	}
+	   protected function validateDelete() {
+		if (!$this->user->hasPermission('modify', 'catalog/customerreview')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		$this->load->model('setting/store');
+
+		foreach ($this->request->post['selected'] as $customerreview_id) {
+			if ($this->config->get('config_account_id') == $customerreview_id) {
+				$this->error['warning'] = $this->language->get('error_account');
+			}
+
+			if ($this->config->get('config_checkout_id') == $customerreview_id) {
+				$this->error['warning'] = $this->language->get('error_checkout');
+			}
+
+			if ($this->config->get('config_affiliate_id') == $customerreview_id) {
+				$this->error['warning'] = $this->language->get('error_affiliate');
+			}
+
+			if ($this->config->get('config_return_id') == $customerreview_id) {
+				$this->error['warning'] = $this->language->get('error_return');
+			}
+		}
+
+		return !$this->error;
+	}
+}
      
 
 
