@@ -1,0 +1,23 @@
+<?php
+class ModelCatalogCustomerreview extends Model {
+	public function addcustomerreview($data) { 
+   //echo "INSERT INTO " . DB_PREFIX . "testimonials SET sort_order = '" .$data['sort_order'] . "',  status = '" .$data['status'] . "', author='".$data['author']."', image='".$data['image']."', description='".$data['description']."', author='".$data['image']."', status='".$data['status']."', sort_order='".$data['sort_order']."' "; die;
+	//die('yes');
+		//echo'<pre>';print_r($data);die;
+		$this->db->query("INSERT INTO " . DB_PREFIX . "customerreview_description SET  status = '" .$data['status'] . "',   designation='".$data['designation']."', sort_order='".$data['sort_order']."' ");
+      
+      $customerreview_id = $this->db->getLastId();
+
+
+		foreach ($data['customerreviews'] as $language_id => $value) {
+			//echo "INSERT INTO " . DB_PREFIX . "testimonials SET testimonial_id = '" . (int)$testimonial_id . "', language_id = '" . (int)$language_id . "', author = '" . $this->db->escape($value['title']) . "', image = '" . $this->db->escape($value['image']) . "', description = '" . $this->db->escape($value['description']) . "'";die;
+			//echo '<pre>';print_r($value);
+			//echo (int)$language_id.(int)$testimonial_id;
+			//echo "INSERT INTO " . DB_PREFIX . "testimonials SET testimonial_id = '" . (int)$testimonial_id . "', language_id = '" . (int)$language_id . "', author = '" . $this->db->escape($value['title']) . "', image = '" . $this->db->escape($value['image']) . "', description = '" . $this->db->escape($value['description']) . "'";die;
+			$this->db->query("INSERT INTO " . DB_PREFIX . "customerreviews SET customerreview_id = '" . (int)$customerreview_id . "', language_id = '" . (int)$language_id . "', author = '" . $this->db->escape($value['title']) . "', image = '" . $this->db->escape($value['image']) . "', description = '" . $this->db->escape($value['description']) . "'");
+        
+		}
+
+		//die;
+  }
+
