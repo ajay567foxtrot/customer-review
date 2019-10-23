@@ -21,3 +21,11 @@ class ModelCatalogCustomerreview extends Model {
 		//die;
   }
 
+  public function getTotalCustomerreview() { 
+  // die;
+       $query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customerreview_description");
+
+		return $query->row['total'];
+  }
+
+ 
