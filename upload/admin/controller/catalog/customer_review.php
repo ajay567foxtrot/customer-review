@@ -444,6 +444,42 @@ class ControllerCatalogCustomer_review extends Controller {
 		return !$this->error;
 	}
 
+	    public function delete() {
+		$this->load->language('catalog/customerreview');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('catalog/customerreview');
+
+		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+			foreach ($this->request->post['selected'] as $testimonial_id) {
+				$this->model_catalog_customerreview->deleteTestimonial($customerreview_id);
+			}
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+			$this->response->redirect($this->url->link('catalog/testimonials', 'user_token=' . $this->session->data['user_token'] . $url, true));
+		}
+
+		$this->getList();
+	}
+     
+
+
 
 
 
